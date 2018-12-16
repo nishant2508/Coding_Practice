@@ -1,0 +1,46 @@
+#Merge Two Sorted Arrays
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE(x) (sizeof(x)/sizeof(x[0]))
+
+
+int* join(int *arr1,int *arr2,int size1,int size2)
+{ 
+   int index1=size1-1;
+   int index2=size2-1;
+   int merged_index=size1+size2-1;
+   int *merged_arr=(int*)malloc(size1+size2);
+   memcpy(merged_arr,arr1,size1);
+   while(index2>=0)
+   {
+       if(index1>=0 && arr1[index1]>arr2[index2])
+       {
+           merged_arr[merged_index]=arr1[index1];
+           index1--;
+       }
+       else
+       {
+           merged_arr[merged_index]=arr2[index2];
+           index2--;
+       }
+       merged_index--;
+   }
+   
+   return merged_arr;
+}
+
+int main()
+{
+    printf("Hello, World!\n");
+    int arr1[]={1,7,8,9};
+    int arr2[]={2,3,11,12,15};
+    int *merged_arr;
+    merged_arr=join(arr1,arr2,SIZE(arr1),SIZE(arr2));
+    for(int i=0;i<SIZE(arr1)+SIZE(arr2);i++)
+    {
+        printf("%d\n",merged_arr[i]);
+    }
+    return 0;
+}
