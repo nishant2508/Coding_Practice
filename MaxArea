@@ -1,0 +1,27 @@
+int maxArea(int* height, int heightSize) {
+    
+int *short_ptr=height;
+int *long_ptr=height+heightSize-1;
+int max_area=0;
+int temp_area=0;
+while(short_ptr<long_ptr)
+{
+    if(short_ptr[0]<long_ptr[0])
+    {
+        temp_area=short_ptr[0]*((long_ptr-short_ptr));
+        short_ptr=short_ptr+1;
+    }
+    else
+    {   
+        temp_area=long_ptr[0]*((long_ptr-short_ptr));
+        long_ptr=long_ptr-1;
+    }
+    if(temp_area>max_area)
+    {
+        max_area=temp_area;
+    }
+}
+
+return max_area;
+           
+}
