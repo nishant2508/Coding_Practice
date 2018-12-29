@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+/*abcabcabc*/
+
+int longest_sub(char *str)
+{
+  int len=strlen(str);
+  char *temp_str=(char*)malloc(len+1);
+  int i=0;
+  int j=0;
+  int max_len=0;
+  
+  if(strlen(str)==0 || strlen(str)==1)
+  {
+      return strlen(str);
+  }
+  
+  while(str[i]!=0)
+  {   
+      /*Initialise with 0th element*/
+      if(temp_str[0]==0)
+      {
+          temp_str[j++]=str[i];
+          /*Stringify*/
+          temp_str[j]=0;
+          i++;
+      }
+      else
+      {  
+         /*Character present in main string*/
+         if(memchr(temp_str,str[i],strlen(temp_str))!=NULL)
+         {   
+             if(max_len<strlen(temp_str))
+             {
+                 max_len=strlen(temp_str);
+             }
+             memset(temp_str,0,len);
+             j=0;
+             i=i-1;
+             temp_str[j++]=str[i];
+             /*Stringify*/
+             temp_str[j]=0;
+             
+         }
+         else
+         {
+             temp_str[j++]=str[i];
+             temp_str[j]=0;
+         }
+         i++;
+      }
+  }
+  
+  max_len=(max_len>strlen(temp_str))?max_len:strlen(temp_str);
+  return max_len;
+  
+}
+
+
+int main()
+{
+    char str[]="bbbbbbbbb";
+    printf("Leng is %d\n",longest_sub(str));
+    return 0;
+}
