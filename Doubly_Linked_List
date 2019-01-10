@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+/*Program to code a doubly linked list*/
+/*Sub components
+ *1. Program a doubly linked list
+ *2. Delete the node
+ */
+/*Nishant Manchanda-1/9/2019*/
+
+
+typedef struct list
+{
+    struct list *prev;
+    int data;
+    struct list *next;
+}dlist;
+
+
+void push(dlist **list,int data)
+{
+    if(*list==NULL)
+    {
+        *list=(dlist*)malloc(sizeof(dlist));
+        (*list)->data=data;
+        (*list)->next=(*list)->prev=NULL;
+    }
+    else
+    {   dlist *ref=*list;
+        while((*list)->next!=NULL)
+        {
+            *list=(*list)->next;
+        }
+        dlist *new_item=(dlist*)malloc(sizeof(dlist));
+        new_item->data=data;
+        new_item->next=NULL;
+        new_item->prev=*list;
+        (*list)->next=new_item;
+        *list=ref;
+    }
+}
+
+void delete_middle(dlist **head)
+{   
+    if(*head==NULL || (*head)->next==NULL)
+    {
+        return;
+    }
+    dlist *slow_ptr=*head;
+    dlist *fast_ptr=(*head)->next;
+    while(fast_ptr!=NULL)
+    {
+        fast_ptr=fast_ptr->next;
+        if(fast_ptr!=NULL)
+        {
+            slow_ptr=slow_ptr->next;
+            fast_ptr=fast_ptr->next;
+        }
+    }
+    (slow_ptr->prev)->next=(slow_ptr)->next;
+    slow_ptr=*head;
+    *head=slow_ptr;
+    
+}
+
+void print(dlist *list)
+{   
+    if(list==NULL)
+    {
+        printf("Nothing to print\n");
+        return;
+    }
+    while(list->next!=NULL)
+    {
+        printf("%d->",list->data);
+        list=list->next;
+    }
+    printf("%d\n",list->data);
+}
+
+
+int main()
+{   
+    printf("Hello to the doubly linked list\n");
+    dlist *new_list=NULL;
+    for(int i=1;i<9;i++)
+    {
+        push(&new_list,i);
+    }
+    print(new_list);
+    delete_middle(&new_list);
+    print(new_list);
+    return 0;
+}
