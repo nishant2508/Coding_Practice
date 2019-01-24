@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef enum
+{
+  _false=0,
+  _true=1
+}bool; 
+
+
+bool has_duplicates(char *str)
+{
+    bool stringmap[0xFF]={_false};
+    int i=0;
+    while(str[i]!=0)
+    {
+        if(stringmap[str[i]]==_true)
+        {
+            return _true;
+        }
+        else
+        {
+            stringmap[str[i]]=_true;
+        }
+        i++;
+    }
+    return _false;
+}
+
+int main()
+{
+    printf("Hello, World!\n");
+    char result[10];
+    char str[]="ABCDE";
+    if(has_duplicates(str)==_true)
+    {
+        strcpy(result,"has");
+    }
+    else
+    {
+        strcpy(result,"has no");
+    }
+    printf("The Sting %s %s duplicates",str,result);
+    return 0;
+}
